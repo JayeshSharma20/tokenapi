@@ -9,7 +9,7 @@ export const fetchProducts = createAsyncThunk("products/fetchProducts", async ()
 
 const initialState = {
     products: [],
-    filteredProducts: [],
+    filteredProducts: [], 
     status: "idle",
     error: null,
   }

@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { act } from "react";
 
 const initialState = {
     categories: ["Tv","Audio","Laptop","Mobile","Gaming","Appliances"],
