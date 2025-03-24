@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import Navbars from './Navbars';
 import Sidebar from './Sidebar';
 import { Link } from 'react-router-dom';
