@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import Navbars from './Navbars';
 import Sidebar from './Sidebar';
-import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Navigate } from 'react-router-dom';
 import { Button, Dropdown } from 'react-bootstrap';
 import { fetchProducts } from '../reduxStore/reducer/ProductSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import Modal from './Custom/Modal';
+import axios from 'axios';
 
 const Products = () => {
   // const [product, setProduct] = useState([]);
@@ -16,17 +18,31 @@ const Products = () => {
   // // const [filteredProducts, setFilteredProducts] = useState([]);
   // const [selectedCategory, setSelectedCategory] = useState('');
   // console.log(category)
+  const [isModalOpen, setIsModalOpen] = useState(false) 
+  const id = useParams()
+  // console.log(id)
+  const token = localStorage.getItem("token")
+  // console.log(token)
   const user = useSelector((state) => state.user.user)
   const dispatch = useDispatch()
   const products = useSelector((state) => state.product.filteredProducts);
   // console.log(products)
   const status = useSelector((state) => state.product.status)
-//  console.log(status)
+ console.log(status)
   useEffect(() => {
     if (status === "idle") {
       dispatch(fetchProducts());
     }
   }, [status, dispatch]);
+
+  function openModal(){
+    setIsModalOpen(true)
+    console.log("Model Open")
+  }
+
+  function closeModal(){
+    setIsModalOpen(false)
+  }
   // generateQuery()
   // const productsByCategory = async (category) => {
   //   // console.log(category)
@@ -122,10 +138,9 @@ const Products = () => {
       <Navbars />
       <div className="flex-1">
         <Sidebar
-
         />
-        <div className="flex flex-col text-center bg-gray-700 sm:ml-56">
-          <div className='flex justify-center items-center gap-4 mt-[4rem]'>
+        <div className="flex flex-col text-center bg-white sm:mt-4 md:ml-56">
+          <div className='flex justify-center items-center gap-4 mt-[6rem] sm:mt[2rem]'>
             {/* <Link
               to="/addproducts"
               className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-2 ml-8 rounded w-full sm:w-40"
@@ -133,31 +148,31 @@ const Products = () => {
               Add Product
             </Link> */}
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4 dark:text-white">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4 dark:text-black">
             {products.map((product) => (
               <div
                 key={product.id}
-                className="border rounded-lg p-4 shadow-md flex flex-col items-center"
+                className="border-1 rounded-2xl border-gray-600 p-4 flex flex-col items-center cursor-pointer text-sm"
               >
                 <img
                   src={product.image}
                   alt={product.title}
-                  className="w-full h-full object-cover mb-2  opacity:1 transform: none w-full rounded-xl shadow-lg relative overflow-hidden bg-white"
+                  className="w-50 h-50 object-cover mb-2  opacity:1 transform: none w-full rounded-xl shadow-lg relative overflow-hidden bg-white"
                 />
                 <div className='flex flex-col items-center'>
-                  <span className="font-semibold">Title: {product.model}</span>
-                  <span className="font-semibold text-l">Brand Name: {product.brand}</span>
+                  <span className="">Title: {product.model}</span>
+                  <span className="f">Brand Name: {product.brand}</span>
                   {/* <span className="font-semibold">Category Name: {product.category}</span> */}
 
                   <div className='flex flex-row items-center gap-2'>
 
-                    <span className='mt-2 pl-[10px] text-white text-sm h-6 w-20 rounded-full text-center flex items-center bg-gradient-to-r from-red-600 to-yellow-500'>Hot Deal</span>
+                    {/* <span className='mt-2 pl-[10px] text-white text-sm h-6 w-20 rounded-full text-center flex items-center bg-gradient-to-r from-red-600 to-yellow-500'>Hot Deal</span> */}
 
-                    <span className="rounded-full justify-center items-center font-bold text-ll mt-2 text-yellow-300">${product.price}</span>
+                    <span className="rounded-full justify-center items-center font-semibold  text-sm mt-2 text-black">Price- ${product.price}</span>
                     <span
                       className={`mt-2 pl-[10px] bg-red-600 text-white text-sm h-7 w-16 rounded-full text-center flex items-center`}
                     >
-                      {product.discount ? `${product.discount}% off` : " 5% Off"}
+                      {product.discount ? `${product.discount}% off` : "5% off"}
                     </span>
                   </div>
 
@@ -171,9 +186,17 @@ const Products = () => {
                 </div>
                 <div className='flex gap-2'>
                   <Button  
-                  className="mt-2 text-sm">
+                  className="mt-2 text-sm "
+                  onClick={openModal}
+                  >
                     View Details
                   </Button>
+                  <Modal
+                  isOpen={isModalOpen}
+                  onClose={closeModal}
+                  message={"PopUp Open"}
+                  // data={data}
+                  />
                   <Button
                     variant="primary"
                     className="mt-2 text-sm"

@@ -17,19 +17,19 @@ function Sidebar( {}) {
   return (
     <div>
       <div
-        className="fixed top-4 text-white bg-gray-600 p-2 rounded"
+        className="fixed top-4 text-white bg-purple-600 p-2 rounded"
         onClick={() => setIsOpen(!isOpen)}
       >
         {isOpen ? <FaTimes size={20} /> : <FaBars size={20} />}
       </div>
       <div
-        className={`md:mt-[4rem] fixed top-0 left-0 w-56 bg-gradient-to-b from-rose-900 to-gray-800 text-white h-screen p-4 transform transition-transform ${
+        className={`sm:mt-[3rem] fixed top-0 left-0 w-56 bg-red-950 text-white h-screen p-4 transform transition-transform ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         } md:translate-x-0  z-30`
     }
       >
       <div className="md:mt-8">
-        <h1 className="text-l font-bold mb-3 px-4">Categories</h1>
+        <h1 className="text-xl font-bold mb-3 px-4">Categories</h1>
         {categories.map((category, index)=>(
           <ul 
           className="grid mt-2 relative dark:text-white text-sm"

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Button from "react-bootstrap/Button";
-import Modal from "./Modal";
+import Modal from "../Components/Custom/Modal";
 import Navbars from "./Navbars";
 import Sidebar from "./Sidebar";
 
@@ -25,7 +25,7 @@ const ProductAdd = () => {
       formData.append("image", image);
 
       const response = await axios.post(
-        "https://dummyjson.com/products/add",
+        "https://fakestoreapi.in/api/products",
         formData
       );
 

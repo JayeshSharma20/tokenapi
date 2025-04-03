@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 
 const Modal = ({ isOpen, onClose, title, message }) => {
   if (!isOpen) return null;
-
+  
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-white rounded-lg p-6 shadow-lg max-w-md w-full">
+    <div className="fixed inset-0 flex items-center justify-center bg-gray-200 bg-opacity-25 z-50">
+      <div className="bg-black rounded-lg p-6 shadow-lg max-w-md w-full">
         <h2 className="text-2xl font-bold mb-4">{title}</h2>
-        <p className="mb-6">{message}</p>
+        <p className="mb-6 text-yellow-400">{message}</p>
         <Link
           to="/products"
           onClick={onClose}

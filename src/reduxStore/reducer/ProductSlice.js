@@ -20,10 +20,15 @@ const productSlice = createSlice({
     filterProducts: (state, action) => {
       const selectedCategory = action.payload.toLowerCase();
       console.log(selectedCategory);
-      state.filteredProducts = state.products.filter(
-        (product) => product.category.toLowerCase() === selectedCategory
-      );
-      console.log( state.filteredProducts);
+      if(selectedCategory === "all"){
+        // return initialState;
+        return { ...state, filteredProducts: state.products };  // this return the all data 
+      }else{
+        state.filteredProducts = state.products.filter(
+          (product) => product.category.toLowerCase() === selectedCategory
+        );
+      }
+      // console.log(state.filteredProducts);
     }
   },
   extraReducers: (builder) => {

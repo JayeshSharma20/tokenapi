@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    categories: ["Tv","Audio","Laptop","Mobile","Gaming","Appliances"],
+    categories: ["All","Tv","Audio","Laptop","Mobile","Gaming","Appliances"],
     selectedCategory: null
 }
 

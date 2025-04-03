@@ -5,8 +5,7 @@ import { userRolesList, getTestingOffice, userList, userGroupList } from '../Api
 import Select from './Custom/Select';
 import { Badge, Card } from 'react-bootstrap';
 import { Link, useParams } from 'react-router-dom';
-import { FaPen, FaEye } from "react-icons/fa";
-import Sidebar from './Sidebar';
+import axios from 'axios';
 // import { useSelector } from 'react-redux';
 
 const User = () => {
@@ -46,7 +45,7 @@ const User = () => {
 
   const columns = [
     {
-      selector: (info) => <Link to={`/usersview/${info.Id}`}>{info.UserName}</Link>,
+      selector: (info) => <Link to={`/usersview/${info.Id}`}>{info.username}</Link>,
       name: "UserName",
       grow: 2,
       allowOverflow: true,
@@ -54,21 +53,21 @@ const User = () => {
       wrap: true,
     },
     {
-      selector: (info) => info.FirstName,
+      selector: (info) => info.name.firstname,
       name: "FirstName",
       grow: 2,
       sortable: true,
       allowOverflow: true,
     },
     {
-      selector: (info) => info.LastName,
+      selector: (info) => info.name.lastname,
       name: "LastName",
       grow: 2,
       sortable: true,
       allowOverflow: true,
     },
     {
-      selector: (info) => info.Email,
+      selector: (info) => info.email,
       name: "Email",
       grow: 2,
       sortable: true,
@@ -76,73 +75,73 @@ const User = () => {
       wrap: true,
     },
     {
-      selector: (info) => info.Phone,
+      selector: (info) => info.phone,
       name: "Phone",
-      grow: 2,
+      grow: 3,
       sortable: true,
       allowOverflow: true,
     },
     {
-      name: "Roles",
+      name: "Address",
       grow: 2,
-      selector: (info) => info.UserRolesName?.RoleName,
+      selector: (info) => info.address.city,
       sortable: true,
-      sortField: "Roles",
+      // sortField: "Roles",
       allowOverflow: true,
     },
-    {
-      name: "Testing Office",
-      grow: 2,
-      selector: (info) => info.TestingOffice?.TestingOfficeName,
-      sortable: true,
-      sortField: "Testing Office",
-      allowOverflow: true,
-    },
-    {
-      name: "Group",
-      grow: 2,
-      selector: (info) => info.UserGroupName,
-      sortable: true,
-      sortField: "UserGroupName",
-    },
+    // {
+    //   name: "Testing Office",
+    //   grow: 2,
+    //   selector: (info) => info.TestingOffice?.TestingOfficeName,
+    //   sortable: true,
+    //   sortField: "Testing Office",
+    //   allowOverflow: true,
+    // },
+    // {
+    //   name: "Group",
+    //   grow: 2,
+    //   selector: (info) => info.UserGroupName,
+    //   sortable: true,
+    //   sortField: "UserGroupName",
+    // },
     
-    {
-      name: "Status",
-      grow: 2,
-      selector: (info) => (
-        <Badge
-          bg={`${info.isActive
-            ? "success"
-            : "danger"
-            }`}
-        >
-          {
-            info.isActive ? "Active" : "InActive"
-          }
-        </Badge>
-      ),
-    },
-    {
-      name: 'Actions',
-      selector: (info) => (
-        <Link
-          to={`/usersform/${info.Id}`}
-          className='edit'
-        >
-          <FaPen />
-        </Link>
-      )
-    },
-    {
-      selector: (info) => (
-        <Link
-          to={`/usersview/${info.Id}`}
-          className='edit'
-        >
-          <FaEye />
-        </Link>
-      )
-    }
+    // {
+    //   name: "Status",
+    //   grow: 2,
+    //   selector: (info) => (
+    //     <Badge
+    //       bg={`${info.isActive
+    //         ? "success"
+    //         : "danger"
+    //         }`}
+    //     >
+    //       {
+    //         info.isActive ? "Active" : "InActive"
+    //       }
+    //     </Badge>
+    //   ),
+    // },
+    // {
+    //   name: 'Actions',
+    //   selector: (info) => (
+    //     <Link
+    //       to={`/usersform/${info.Id}`}
+    //       className='edit'
+    //     >
+    //       <FaPen />
+    //     </Link>
+    //   )
+    // },
+    // {
+    //   selector: (info) => (
+    //     <Link
+    //       to={`/usersview/${info.Id}`}
+    //       className='edit'
+    //     >
+    //       <FaEye />
+    //     </Link>
+    //   )
+    // }
   ]
 
   function generateSearchQuery(selectOption, searchTerm="", searchParam = []){
@@ -188,15 +187,23 @@ const User = () => {
     return filter;
   }
 
+  async function userList() {
+    const response = await axios.get("https://fakestoreapi.in/api/users?limit=40")
+    console.log(response)
+    setData(response.data.users)
+  }
+
   const callData = useCallback(async () => {
     let searchQuery = generateSearchQuery(selectOption, searchTerm, searchParam)
     // console.log(searchQuery)
     await userList(
-      token,
-      `?$count=true&$expand=UserRolesName($select=RoleName),TestingOffice($select=TestingOfficeName)${searchQuery}&$orderby=CreatedOn DESC`
+      // token,
+      // `?$count=true&$expand=UserRolesName($select=RoleName),TestingOffice($select=TestingOfficeName)${searchQuery}&$orderby=CreatedOn DESC`
+      // 'https://dummyjson.com/users'
+      
     )
       .then((data) => {
-        // console.log(data?.value) 
+        console.log(data?.value) 
         setData(data?.value)
         setFilterData(data?.value)
       })
@@ -247,13 +254,14 @@ const User = () => {
   }
 
   useEffect(() => {
-    callData()
+    // callData()
   }, [searchTerm, selectOption])
 
   useEffect(() => {
-    getTestingOfficeOptions()
-    getUserRole()
-    getUserGroup()
+    // getTestingOfficeOptions()
+    // getUserRole()
+    // getUserGroup()
+    userList()
   }, [])
 
   // useEffect(() => {
@@ -279,7 +287,7 @@ const User = () => {
     <Fragment>
     <Navbars />
     <Card> 
-      <div className="flex flex-wrap justify-center items-center gap-4 text-black p-2 mt-[14rem] sm:mt-[6rem]">
+      <div className="flex flex-wrap justify-center items-center gap-4 text-black p-2 mt-[8rem] md:mt-20">
         <input
           type="text"
           placeholder="Search"
@@ -354,7 +362,7 @@ const User = () => {
       <div className="flex justify-center items-center text-black p-8">
         <div className="w-full max-w-7xl rounded bg-gray-500 border shadow p-4 overflow-x-auto">
           <Table  
-           data={filterData} 
+           data={data} 
            columns={columns} 
            />
         </div>

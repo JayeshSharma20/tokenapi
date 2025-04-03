@@ -20,19 +20,25 @@ const Navbars = () => {
 
     return (
         <Fragment>
-            <div className="fixed top-0 left-0 w-full z-40 bg-gray-800 sm:px-2 sm:py-2 flex flex-col md:flex-row md:justify-between md:items-center">
+            <div className="fixed top-0 left-0 w-full z-50 bg-black sm:px-2 sm:py-2 flex flex-col md:flex-row md:justify-between items-center md:items-center shadow-md">
                 <div className='flex gap-8'>
-                    <h1 className="text-white font-small text-sm text-center ml-24 mt-2 sm:ml-8 md:text-lg">
-                        Welcome, {user?.username} {user?.firstName}
+                    <h1 className="text-orange-500 font-bold text-sm text-center ml-4 mt-2 md:ml-8 md:text-xl">
+                        Welcome,  {user?.firstName}
                     </h1>
                 </div>
-                <input
+                {/* <input
                     type="text"
                     placeholder="Search"
                     // value={searchTerm}
                     // onChange={(e) => setSearchTerm(e.target.value)}
-                      className="w-50 sm:w-64 ml-20 mt-2 px-2 py-1 sm:px-2 sm:py-2 rounded"
-                    />
+                      className="sm:w-25 sm:py-2 sm:px-4 rounded-md w-25 ml-20 px-4 py-1 "
+                    /> */}
+                <input
+                    type="text"
+                    placeholder="Search"
+                    className="w-72 sm:w-60 md:w-72 lg:w-80 xl:w-96 px-4 py-1 border rounded-xl outline-orange-400 ml-4 md:ml-10"
+
+                />
                 <div className="mt-2 md:mt-0 flex flex-col sm:flex-row gap-2 sm:gap-4">
                     {!user ? (
                         <div className="flex flex-col sm:flex-row gap-2">
@@ -48,7 +54,7 @@ const Navbars = () => {
                             </Link>
                         </div>
                     ) : (
-                        <div className="flex flex-row sm:flex-row gap-6 ml-6 sm:gap-4 items-center">
+                        <div className="flex flex-row sm:flex-row gap-8 ml-6 sm:gap-4 items-center">
                             <Link
                                 to="/products"
                                 className="flex items-center gap-2 text-white sm:px-4 sm:py-2  hover:bg-white/30 rounded"

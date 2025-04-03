@@ -5,6 +5,7 @@ import DataTable from 'react-data-table-component';
 
 const Table = (props) => {
   const { data, columns } = props
+  console.log(data)
   return (
     <Fragment>
       <DataTable
