@@ -134,7 +134,7 @@ const Products = () => {
   }
 
   return (
-    <div className='flex'>
+    <>
       <Navbars />
       <div className="flex-1">
         <Sidebar
@@ -209,7 +209,7 @@ const Products = () => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

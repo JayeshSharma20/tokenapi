@@ -23,7 +23,7 @@ function Sidebar( {}) {
         {isOpen ? <FaTimes size={20} /> : <FaBars size={20} />}
       </div>
       <div
-        className={`sm:mt-[3rem] fixed top-0 left-0 w-56 bg-red-950 text-white h-screen p-4 transform transition-transform ${
+        className={`sm:mt-[3rem] fixed top-0 left-0 w-56 bg-gradient-to-b from-red-900 to-gray-900 text-white h-screen p-4 transform transition-transform ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         } md:translate-x-0  z-30`
     }
